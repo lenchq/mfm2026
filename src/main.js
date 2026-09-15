@@ -27,7 +27,7 @@ function home() {
   <section class="learning section"><div class="wrap"><div class="section-heading"><p class="eyebrow">02 / КАК ЭТО РАБОТАЕТ</p><h2>ОТ ИНТЕРЕСА<br>К ПЕРВОМУ ПРОЕКТУ</h2></div><div class="steps">${[['Выбери направление', 'Узнай, чем занимается специалист.'], ['Изучай теорию', 'Проходи материалы в удобном темпе.'], ['Выполняй практику', 'Закрепляй знания на реальных заданиях.'], ['Развивайся', 'Смотри короткие видео и общайся с сообществом.']].map((s, i) => `<article><span class="step-num">0${i + 1} /</span><h3>${s[0]}</h3><p>${s[1]}</p></article>`).join('')}</div>${link('/karta-obucheniya', 'Посмотреть карту обучения', 'light')}</div></section><section class="wrap section"><div class="final-cta"><div><p class="eyebrow">ТВОЙ СЛЕДУЮЩИЙ ШАГ</p><h2>ГОТОВ НАЧАТЬ<br>СВОЙ ПУТЬ?</h2><p>Выбери направление и сделай первый шаг в профессию.</p></div>${link('/#directions', 'Выбрать направление', 'light')}</div></section>`;
 }
 function direction(t) {
- return `<section class="wrap section"><a class="text-link" href="/#directions">← Все направления</a><div class="page-heading"><p class="eyebrow">ЗНАКОМСТВО С ПРОФЕССИЕЙ</p><h1>${t.name}</h1><p class="intro">${t.description}</p></div>${trackStatus(t)}<div class="direction-layout"><aside class="info-card"><p class="eyebrow">О НАПРАВЛЕНИИ</p><h2 class="small-title">ТВОИ ВОЗМОЖНОСТИ</h2><p>${t.description} ${choose('Начни с основ и собери собственный проект.', 'Start with the basics and build your own project.')}</p>${link(mapUrl(t), 'Открыть карту обучения')}<hr><h3>Компании</h3><p class="muted">Примеры работодателей, не партнёры платформы. Наличие вакансий не проверено.</p>${companyLogos(t)}<hr><h3>Практика и развитие</h3><p>Учебные проекты, конкурсы, стажировки и мероприятия — следующие шаги после изучения основ.</p><a class="text-link" href="/forum?track=${t.id}">Найти единомышленников →</a></aside><div class="video-feed">${videoCards(t, image)}</div></div></section>`;
+ return `<section class="wrap section"><a class="text-link" href="/#directions">← Все направления</a><div class="page-heading"><p class="eyebrow">ЗНАКОМСТВО С ПРОФЕССИЕЙ</p><h1>${t.name}</h1><p class="intro">${t.description}</p></div>${trackStatus(t)}<div class="direction-layout"><aside class="info-card"><p class="eyebrow">О НАПРАВЛЕНИИ</p><h2 class="small-title">ТВОИ ВОЗМОЖНОСТИ</h2><p>${t.description} ${choose('Начни с основ и собери собственный проект.', 'Start with the basics and build your own project.')}</p>${link(mapUrl(t), 'Открыть карту обучения')}<hr><h3>Компании</h3><p class="muted">Примеры работодателей</p>${companyLogos(t)}<hr><h3>Практика и развитие</h3><p>Учебные проекты, конкурсы, стажировки и мероприятия — следующие шаги после изучения основ.</p><a class="text-link" href="/forum?track=${t.id}">Найти единомышленников →</a></aside><div class="video-feed">${videoCards(t, image)}</div></div></section>`;
 }
 function roadmap(t) {
  const total = t.stages.reduce((n, s) => n + s[1].length + s[2].length, 0);
@@ -74,7 +74,20 @@ function render() {
    main.tabIndex = -1;
    main.focus({ preventScroll: true });
  });
- document.querySelectorAll('[data-material]').forEach(a => a.addEventListener('click', event => event.preventDefault()));
+ document.querySelectorAll('[data-material]').forEach(a => {
+   a.removeAttribute('aria-disabled');
+   a.addEventListener('click', event => {
+     event.preventDefault();
+     const wasOpen = a.nextElementSibling?.classList.contains('material-hint');
+     document.querySelectorAll('.material-hint').forEach(hint => hint.remove());
+     if (wasOpen) return;
+     const hint = document.createElement('div');
+     hint.className = 'material-hint';
+     hint.setAttribute('role', 'status');
+     hint.textContent = choose('Это пример материала. Материал готовится.', 'This is a sample resource. The material is being prepared.');
+     a.after(hint);
+   });
+ });
  document.querySelector('[data-create]')?.addEventListener('click', () => document.querySelector('dialog').showModal());
  document.querySelectorAll('[data-close], .dialog-close').forEach(el => el.addEventListener('click', () => document.querySelector('dialog').close()));
  document.querySelectorAll('[data-progress]').forEach(input => input.addEventListener('change', () => {
@@ -87,7 +100,13 @@ function render() {
    text.textContent = (input.checked ? '✓ ' : '') + text.textContent.replace(/^✓ /, '');
  }));
 }
+document.addEventListener('keydown', event => {
+ if (event.key === 'Escape') document.querySelectorAll('.material-hint').forEach(hint => hint.remove());
+});
 document.addEventListener('click', event => {
+ if (!event.target.closest('[data-material], .material-hint')) {
+   document.querySelectorAll('.material-hint').forEach(hint => hint.remove());
+ }
  const anchor = event.target.closest('a');
  if (!anchor || anchor.hasAttribute('data-material') || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || anchor.target || anchor.hasAttribute('download')) return;
  const url = new URL(anchor.href);

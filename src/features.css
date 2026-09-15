@@ -55,6 +55,8 @@
 .material-links a { display: flex; align-items: baseline; gap: 10px; color: #2454ef; font-size: 13px; line-height: 1.5; padding: 8px 0; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
 .material-links a > span:first-child { flex-shrink: 0; text-decoration: none; }
 .material-links a:hover { color: #183497; }
+.material-hint { position: relative; width: fit-content; max-width: 100%; box-sizing: border-box; margin: 4px 0 12px; padding: 10px 14px; border: 1px solid #dce3f7; border-radius: 8px; background: #f0f4ff; color: #344568; font-size: 12px; line-height: 1.5; }
+.material-hint::before { content: ''; position: absolute; top: -5px; left: 20px; width: 8px; height: 8px; background: #f0f4ff; border-top: 1px solid #dce3f7; border-left: 1px solid #dce3f7; transform: rotate(45deg); }
 main, .forum-layout > *, .map-summary > *, .hero > * { min-width: 0; }
 @media (max-width: 1000px) {
   .reel { flex-basis: calc((100% - 22px) / 2); }

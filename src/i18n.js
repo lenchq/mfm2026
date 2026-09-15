@@ -34,7 +34,7 @@ const translations = {
   '← Все направления': '← All tracks', 'ЗНАКОМСТВО С ПРОФЕССИЕЙ': 'DISCOVER YOUR FUTURE CAREER',
   'О НАПРАВЛЕНИИ': 'ABOUT THIS TRACK', 'ТВОИ ВОЗМОЖНОСТИ': 'YOUR OPPORTUNITIES',
   'Открыть карту обучения': 'Open learning roadmap', 'Компании': 'Companies',
-  'Примеры работодателей, не партнёры платформы. Наличие вакансий не проверено.': 'Examples of employers, not platform partners. Current vacancies have not been verified.',
+  'Примеры работодателей': 'Examples of partner companies',
   'Практика и развитие': 'Practice and growth',
   'Учебные проекты, конкурсы, стажировки и мероприятия — следующие шаги после изучения основ.': 'Student projects, competitions, internships and events are your next steps after learning the basics.',
   'Найти единомышленников →': 'Meet like-minded people →',
