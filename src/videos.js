@@ -1,8 +1,9 @@
 import { translate, localize, choose } from './i18n.js';
 import { hasQuiz, startQuiz } from './quiz.js';
+import { renderArrows } from './icons.js';
 
 export function videoCards(track, image) {
-  return `<div class="row-heading"><h2 class="small-title" id="videos-heading">КОРОТКО О ГЛАВНОМ</h2><span class="muted">04 видео · листай →</span></div>
+  return `<div class="row-heading"><h2 class="small-title" id="videos-heading">КОРОТКО О ГЛАВНОМ</h2><span class="muted">${track.id === 'dizayn' ? choose('01 видео доступно · ещё 03 скоро', '01 video available · 03 coming soon') : choose('04 видео · скоро', '04 videos · coming soon')}</span></div>
     <div class="reels" role="region" aria-labelledby="videos-heading" tabindex="0">${track.videos.map((title, i) => `
       <button class="reel" data-video-track="${track.id}" data-video-index="${i}" aria-label="Открыть видео: ${title}">
         <img loading="lazy" src="${image(`VIDEO / 0${i + 1}`, '450x700', 'd5dce6')}" alt="">
@@ -33,6 +34,7 @@ export function bindVideos(tracks, onRoadmap) {
     modal.setAttribute('aria-labelledby', 'video-title');
     modal.innerHTML = `<div class="video-toolbar"><h2 id="video-title">${track.videos[index]}</h2><button class="video-close" aria-label="Закрыть видео">✕</button></div><div class="video-stage">${playable ? '<video controls playsinline preload="none" aria-label="Первое видео о дизайне"></video><p class="video-status" role="status">Загрузка видео…</p>' : '<div class="video-placeholder"><span aria-hidden="true">▷</span><h3>Видео готовится</h3><p>Здесь появится обучающий ролик.<br>Пока можно изучить карту направления.</p></div>'}</div>`;
     localize(modal);
+    renderArrows(modal);
     document.body.append(modal);
     const player = modal.querySelector('video');
     const stage = modal.querySelector('.video-stage');
@@ -60,6 +62,7 @@ export function bindVideos(tracks, onRoadmap) {
       const preview = document.createElement('button');
       preview.className = 'button quiz-preview';
       preview.textContent = choose('Предпросмотр квиза →', 'Preview the quiz →');
+      renderArrows(preview);
       preview.addEventListener('click', openQuiz);
       const note = document.createElement('p');
       note.className = 'quiz-preview-note';

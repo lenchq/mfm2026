@@ -1,6 +1,7 @@
 import { choose } from './i18n.js';
 import { designQuiz } from './quiz-data.js';
 import './quiz.css';
+import { renderArrows } from './icons.js';
 
 const text = pair => choose(...pair);
 export const hasQuiz = (trackId, videoIndex) => trackId === 'dizayn' && videoIndex === 0;
@@ -10,6 +11,7 @@ export function startQuiz(container, track, onRoadmap) {
   let current = 0;
   const answers = [];
   function focusHeading() {
+    renderArrows(container);
     container.scrollTop = 0;
     container.querySelector('[tabindex="-1"]')?.focus({ preventScroll: true });
   }

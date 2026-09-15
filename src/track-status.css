@@ -1,0 +1,13 @@
+.arrow-icon { display: inline-block; width: 1em; height: 1em; vertical-align: -.125em; flex-shrink: 0; }
+.track-status-badge { display: inline-block; border-radius: 4px; padding: 7px 10px; margin-bottom: 16px; font-size: 11px; font-weight: 700; line-height: 1.4; }
+.is-available { background: #e6f1d9; color: #355b24; }
+.is-preview { background: #fff0de; color: #844819; }
+.track-status { padding: 20px 24px; border-radius: 7px; margin: 0 0 30px; border: 1px solid currentColor; }
+.track-status strong { display: block; font-size: 15px; margin-bottom: 6px; }
+.track-status p { font-size: 14px; line-height: 1.6; max-width: 850px; }
+.tabs + .track-status { margin-top: 14px; }
+@media(max-width: 760px) {
+  .track-status { padding: 18px; margin-bottom: 24px; }
+  .track-status p { font-size: 13px; }
+  .track-status-badge { font-size: 10px; }
+}
